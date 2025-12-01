@@ -1,0 +1,51 @@
+# -------------------------
+# Python Virtual Environment
+# -------------------------
+venv/
+env/
+.venv/
+
+# -------------------------
+# Python Bytecode
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# -------------------------
+# Jupyter Notebook Checkpoints
+# -------------------------
+.ipynb_checkpoints/
+
+# -------------------------
+# System / OS Files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Environment & Config Files
+# -------------------------
+*.env
+*.ini
+
+# -------------------------
+# Logs
+# -------------------------
+*.log
+
+# -------------------------
+# Data (optional, depending on group rules)
+# Only ignore raw and large data if instructed
+# -------------------------
+# data/raw/
+# data/interim/
+# data/processed/
+
+# -------------------------
+# Cache / Build
+# -------------------------
+*.egg-info/
+dist/
+build/
