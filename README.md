@@ -1,6 +1,6 @@
 DSA 2040A Group Project – End-to-End Data Mining
 zaky Shafi
-Katt- Analyst
+Catherine- Analyst
 Aaron Irakoze - visualizer
 Nathan
 James Mponzi - Analyst
