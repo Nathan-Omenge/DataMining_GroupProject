@@ -1,65 +1,125 @@
-DSA 2040A Group Project – End-to-End Data Mining
-zaky Shafi
-Catherine- Analyst
-Aaron Irakoze - visualizer
-Nathan
-James Mponzi - Analyst
+ Personal Finance Data Mining Project
 
-Role	Responsibilities
-
-(ETL Lead	Designs and runs the pipeline) : ensures data accuracy, manages folder structure, and version control.
-(Data Analyst)	: Examines cleaned data, performs exploratory and statistical analysis, and identifies trends and correlations.
-(Visualizer)	: Builds visualizations or dashboards (Plotly Dash, Power BI) and presents insights.
-(Documenter)	: Writes and updates README, summarizes weekly progress, and keeps group deliverables consistent.
-
-Topic : Finance (Budgeting and insights)
-This project appplies the full pipleine(ELT, Data mining and insights) using a raw perosnal finance data set that contain transaction- level data such as:
-- Date
-- merchant
-- amount
-- payement mode
-- category
-  
-This process reflects on  what what has been done, issues faced and how they are solved starting with:
-
-using the uplodaded raw data set ([budgetwise_synthetic_dirty_raw.csv](https://github.com/user-attachments/files/23227184/budgetwise_synthetic_dirty_raw.csv) 
-We unfold with the process by assigning roles for the project which include( ETL lead (extract,transform,load), data analyst, visualizer, documenter)
-The selected data set is associated with finance, the goal is to intentionally get a raw fiancial data with clear quality errors e.g (rows and columns contiang errors, wrong formats, duplicates, and missing fields).
-
-
-Exploration and visulation tools in use for the process.
-
-Seaborn - visualization , correlations, category comparisons and fruther trends(either going up or down)
-Matplotlib - creating plots such as line graphs, bar charts and and other spending visulas.
-Pandas- CLeaning, reading, transforming and meriging with the raw dataset to get a valuable dataset to work with.
- When extracting data sets not everything comes with a correct output meaning missing values, duplicates etc. problems such as:
- -missing values : some trancsations lack amount or dates
--duplicate records: repeated imports or logs from more than two accounts.
--Outliers: Amounts which are too high or  too low
--Category (errors in naming) : Transactions mislabeled or uncategorized
--Unbalnced date (more expenses than income) - missing accounts and expensse are higher than income.
-
-The data set is not in order leaving it disorganized and inconsistent making it difficult to draw a relible financial output/conclusions.
-- clean and standerdize messy data for anlaysis
-- Detect spending trends and patterns
-- Help users understand ehre their income goes.
-- Provide insights (visualizations) to improve and savings.
-  Basically, turn raw data and unreliable data into a meaningful and decison ready informations
-
-Expanding the ETL pipeline goes throght the process such as
--extracting and validating the raw data
-cleaning and tranforming it into a much more structured data set
--the display the final transformed files for data mining
-
-What We Have to Do About the Raw Dataset
--Conduct data profiling: understand column meanings, missing counts, and outlines.
--Apply consistent outline enforcement: define correct data types (float, string, datetime).
--Develop cleaning scripts in Python (Jupyternotebook) for repeatability.
--Save intermediate outputs for comparison and versioning.
--Members of the group should review the transofrmation for accuracy.
+## Group Members: 
+Zaky Shafi (ID ###)
+Catherine (ID ###) 
+Aaron Irakoze (ID ###)
+Nathan Orang'o (637)
+James Mponzi (ID ###)
 
 
 
+## Project Summary
+End-to-end data mining on synthetic personal finance transactions, transforming messy raw data into business insights. 
+Final cleaned dataset: 15,658 transactions (from 15,836 raw), 192 users, $195.4M volume, 2019–2022 coverage, 212 categories. 
+
+Goals: fix data quality, analyze spending patterns, segment users, and deliver actionable recommendations.
+
+## Team Roles
+- ETL Lead: Pipeline design, data quality, versioning.
+- Data Analyst(s): EDA, statistical testing, trend discovery.
+- Visualizer: Dashboards and plots.
+- Documenter: README/report maintenance and weekly updates.
+
+## Week-by-Week Progress
+### Week 1 – Kickoff & Data Audit
+- Selected personal finance as the domain and sourced the intentionally messy `budgetwise_synthetic_dirty_raw.csv` (15,836 rows, 9 columns: transaction_id, user_id, date, transaction_type, category, amount, payment_mode, location, notes).
+- Confirmed real-world style data quality issues (mixed date formats, currency symbols, typos in categories/payment modes, missing values) to justify a full ETL+mining pipeline.
+- Assigned roles (ETL Lead, Data Analyst, Visualizer, Documenter) and defined success metrics: clean dataset ready for mining plus actionable business insights.
 
 
+### Week 2 – ETL & Feature Engineering
+- Built a multi-pass date parser combining `infer_datetime_format` plus custom formats; achieved 97.6% parse success (15,455/15,836), accepting 2.4% loss for unparseable dates.
+- Standardized amounts by stripping currency symbols/commas and converting to float with 100% success across non-null records.
+- Consolidated 62 payment-mode variants to 35 standardized labels; 4 main modes cover ~95% of transactions.
+- Engineered 9→18 features (frequency, totals, average amount, expense ratio, weekend flags, amount bins) and reduced critical missingness to 2.4%, yielding a cleaned export of 15,658 transactions for downstream analysis.
+![Feature engineering results and final dataset shape after cleaning](images/Screenshot 2025-12-05 at 7.03.50 PM.png)
 
+### Week 3 – Exploratory & Statistical Analysis
+- Profiled distributions: highly right-skewed amounts (mean $12,477 vs median $534; outliers to $999,999), informing the need for robust methods.
+- Ran Welch’s t-test (income vs expense): mean $59,844 vs $8,388; p<0.001; Cohen’s d 1.89 → large practical effect.
+- Weekend vs weekday t-test: weekend +$441 per transaction; p=0.029 → significant discretionary uplift.
+- ANOVA on top 5 categories: p<0.001 → category strongly predicts amount; chi-square payment mode vs type: χ²=1,247.83, p<0.001, Cramér’s V 0.28 → systematic payment-mode choices.
+- Temporal patterns: December peak $18M vs January $12.5M; weekday counts dominate but weekends have higher per-transaction value.
+
+  ![Transaction amount distribution (log scale) showing right skew and outliers](images/Screenshot 2025-12-05 at 7.05.53 PM.png)
+
+  ![Amount distribution by transaction type (Income vs Expense)](images/Screenshot 2025-12-05 at 7.07.06 PM.png)
+
+  ![Average transaction amount: weekend vs weekday](images/Screenshot 2025-12-05 at 7.06.41 PM.png)
+
+### Week 4 – Data Mining
+- K-means clustering (elbow at K=4) on user-level features produced segments: Conservative (14.6%, high avg transaction, low expense ratio), High-Value (29.2%, expense-focused), Frequent (35.4%, highest activity and diversity), Premium (20.8%, highest spend and ticket size).
+ ![Elbow method showing optimal K=4 for K-means](images/Screenshot 2025-12-05 at 7.08.22 PM.png)
+
+- Random Forest classification for top 5 categories: ~35.5% accuracy vs 20% baseline (+77.5% over chance); amount is top feature 
+![Random Forest feature importance for transaction categorization](images/Screenshot 2025-12-05 at 7.09.25 PM.png)
+
+- Association rules on user-category matrix: universal usage of major categories; payment-mode preferences by category (UPI→Food, Cash→Rent, Card→Travel/Entertainment, Transfer→Utilities) enabling smart suggestions.
+  ![User cluster distribution across four segments](images/Screenshot 2025-12-05 at 7.09.01 PM.png)
+
+### Week 5 – Dashboards & Business Insights
+- Built dashboards with KPI panels (15,658 transactions, 192 users, $195.4M volume), cluster profiles, temporal trends, and category-payment matrices for quick stakeholder consumption.
+- Authored five recommendations: (1) VIP tiers for Premium + Conservative users, (2) semi-automated categorization using RF with confidence thresholds, (3) weekend optimization to capture the $441 premium, (4) payment-mode guidance by category, (5) holistic platform strategy since all users span major categories.
+![Business intelligence dashboard: segmentation, trends, category matrix, payment modes, engagement heatmap, and platform health](images/output.png)
+
+## ETL Summary (Notebook: `notebooks/1_extract_transform.ipynb`)
+- Date parsing: Multi-format handling (natural language + custom patterns) → 97.6% success.
+- Amount cleaning: Removed symbols/commas → 100% float conversion.
+- Payment modes: Standardized 62 variants to 35; 4 main modes ≈95% of transactions.
+- Feature engineering: Added frequency, totals, avg amounts, expense ratio, weekend flags, amount bins → 18 analytical features.
+- Data quality: Missing data reduced from 10.8% to 2.4% in critical fields.
+
+## Exploratory & Statistical Analysis (Notebook: `notebooks/2_exploratory_anaylsis.ipynb`)
+- Distribution: Highly right-skewed; outliers to $999,999.
+- Income vs Expense (Welch’s t-test): mean $59,844 vs $8,388; p<0.001.
+- Weekend vs Weekday (t-test): weekend +$441; p=0.029.
+- Category differences (ANOVA): p<0.001 across top 5 categories.
+- Payment mode vs type (chi-square): χ²=1,247.83; p<0.001; Cramér’s V 0.28.
+- Seasonality: December peak $18M; January trough $12.5M; weekdays dominate counts, weekends higher per-transaction value.
+
+## Data Mining Techniques (Notebook: `notebooks/3_data_mining.ipynb`)
+- Clustering (K-means): K=4 (elbow). Segments: Conservative Spenders (14.6%), High-Value Users (29.2%), Frequent Transactors (35.4%), Premium Users (20.8%).
+- Classification (Random Forest): 35.5% accuracy on 5-class vs 20% baseline; amount most important feature; partial automation viable.
+- Association Rules: Universal adoption of major categories (Food/Rent/Travel/Utilities ≈100% users); payment-mode preferences by category (UPI→Food, Cash→Rent, Card→Travel/Entertainment, Transfer→Utilities).
+
+## Tools Used
+- Python, pandas, numpy
+- seaborn, matplotlib, plotly/streamlit
+- scikit-learn
+- Jupyter, Git
+
+## How to Run the Notebooks
+1) Create and activate env:
+```bash
+python -m venv venv
+source venv/bin/activate   # or venv\Scripts\activate on Windows
+```
+2) Install deps:
+```bash
+pip install -r requirements.txt
+```
+3) Ensure `data/budgetwise_synthetic_dirty_raw.csv` is present.
+4) Run notebooks in order via Jupyter:
+   - `notebooks/1_extract_transform.ipynb`
+   - `notebooks/2_exploratory_anaylsis.ipynb`
+   - `notebooks/3_data_mining.ipynb`
+   - `notebooks/4_insights_dashboard.ipynb`
+
+## Visuals to Embed (add images accordingly)
+- EDA: Distribution/boxplot (amount skew), payment mode bar, monthly trend line.
+- Stats: Income vs expense effect size, weekend vs weekday comparison.
+- Mining: Elbow plot (K=4), cluster profiles, classification feature importance, association-rule heatmap.
+- Dashboard: KPI cards, segment pie/bar, seasonality chart, category-payment matrix.
+
+## Business Insights (Week 5)
+1) VIP tiers for Premium + Conservative users (35.4% users; majority revenue).
+2) Semi-automated categorization using RF (35.5% accuracy; confidence-based workflow).
+3) Weekend optimization: capture $441 premium per transaction with tailored features/support.
+4) Payment-mode guidance: suggest optimal method per category (UPI/Food, Cash/Rent, Card/Travel+Entertainment, Transfer/Utilities).
+5) Holistic platform strategy: all users span major categories → build integrated budgeting, health scoring, multi-category goals.
+
+## Collaboration Rules 
+- Use feature branches; meaningful commit messages.
+- PRs with review before merge; keep notebooks and data paths consistent.
+- Update README weekly; place visuals near relevant sections.
