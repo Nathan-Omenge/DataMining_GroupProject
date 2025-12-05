@@ -1,4 +1,4 @@
-Personal Finance Data Mining Project
+# Personal Finance Data Mining Project
 
 ## Group Members: 
 Zaky Shafi (ID ###)
