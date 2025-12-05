@@ -1,4 +1,4 @@
- Personal Finance Data Mining Project
+Personal Finance Data Mining Project
 
 ## Group Members: 
 Zaky Shafi (ID ###)
@@ -10,10 +10,22 @@ James Mponzi (ID ###)
 
 
 ## Project Summary
-End-to-end data mining on synthetic personal finance transactions, transforming messy raw data into business insights. 
-Final cleaned dataset: 15,658 transactions (from 15,836 raw), 192 users, $195.4M volume, 2019–2022 coverage, 212 categories. 
+End-to-end data mining on synthetic personal finance transactions, transforming messy raw data into business insights. Final cleaned dataset: 15,658 transactions (from 15,836 raw), 192 users, $195.4M volume, 2019–2022 coverage, 212 categories. Goals: fix data quality, analyze spending patterns, segment users, and deliver actionable recommendations.
 
-Goals: fix data quality, analyze spending patterns, segment users, and deliver actionable recommendations.
+## Project Overview
+- Data: Personal finance transactions with intentional quality issues (mixed dates, currency symbols, typos, missing values) across 15,836 raw records and 9 columns.
+- Scope: Complete pipeline—ETL, feature engineering, EDA, statistical testing, clustering, classification, association rules, and dashboarding.
+- Outcome: Clean analytical dataset (15,658 rows; 18 engineered features) enabling insights on user spending behavior, segmentation, and payment preferences.
+- Value: Business-ready recommendations for VIP tiers, semi-automated categorization, weekend optimization, and payment-mode guidance.
+
+## Questions to Answer
+- How do income and expense patterns differ in magnitude and variability?
+- Do users spend differently on weekends vs weekdays, and by how much?
+- Which categories drive the largest or most variable transactions?
+- What payment-mode preferences align with transaction types and categories?
+- How do users naturally segment based on spending frequency, totals, and ratios?
+- Can transaction categorization be partially automated with current features?
+- What seasonal or monthly patterns shape transaction counts and volumes?
 
 ## Team Roles
 - ETL Lead: Pipeline design, data quality, versioning.
@@ -33,7 +45,7 @@ Goals: fix data quality, analyze spending patterns, segment users, and deliver a
 - Standardized amounts by stripping currency symbols/commas and converting to float with 100% success across non-null records.
 - Consolidated 62 payment-mode variants to 35 standardized labels; 4 main modes cover ~95% of transactions.
 - Engineered 9→18 features (frequency, totals, average amount, expense ratio, weekend flags, amount bins) and reduced critical missingness to 2.4%, yielding a cleaned export of 15,658 transactions for downstream analysis.
-![Feature engineering results and final dataset shape after cleaning](images/Screenshot 2025-12-05 at 7.03.50 PM.png)
+![Feature engineering results and final dataset shape after cleaning](images/feature_engineering.png)
 
 ### Week 3 – Exploratory & Statistical Analysis
 - Profiled distributions: highly right-skewed amounts (mean $12,477 vs median $534; outliers to $999,999), informing the need for robust methods.
@@ -42,21 +54,21 @@ Goals: fix data quality, analyze spending patterns, segment users, and deliver a
 - ANOVA on top 5 categories: p<0.001 → category strongly predicts amount; chi-square payment mode vs type: χ²=1,247.83, p<0.001, Cramér’s V 0.28 → systematic payment-mode choices.
 - Temporal patterns: December peak $18M vs January $12.5M; weekday counts dominate but weekends have higher per-transaction value.
 
-  ![Transaction amount distribution (log scale) showing right skew and outliers](images/Screenshot 2025-12-05 at 7.05.53 PM.png)
+  ![Transaction amount distribution (log scale) showing right skew and outliers](images/amount_distribution.png)
 
-  ![Amount distribution by transaction type (Income vs Expense)](images/Screenshot 2025-12-05 at 7.07.06 PM.png)
+  ![Amount distribution by transaction type (Income vs Expense)](images/income_expense_box.png)
 
-  ![Average transaction amount: weekend vs weekday](images/Screenshot 2025-12-05 at 7.06.41 PM.png)
+  ![Average transaction amount: weekend vs weekday](images/weekend_weekday_bar.png)
 
 ### Week 4 – Data Mining
 - K-means clustering (elbow at K=4) on user-level features produced segments: Conservative (14.6%, high avg transaction, low expense ratio), High-Value (29.2%, expense-focused), Frequent (35.4%, highest activity and diversity), Premium (20.8%, highest spend and ticket size).
- ![Elbow method showing optimal K=4 for K-means](images/Screenshot 2025-12-05 at 7.08.22 PM.png)
+ ![Elbow method showing optimal K=4 for K-means](images/elbow_k4.png)
 
 - Random Forest classification for top 5 categories: ~35.5% accuracy vs 20% baseline (+77.5% over chance); amount is top feature 
-![Random Forest feature importance for transaction categorization](images/Screenshot 2025-12-05 at 7.09.25 PM.png)
+![Random Forest feature importance for transaction categorization](images/rf_feature_importance.png)
 
 - Association rules on user-category matrix: universal usage of major categories; payment-mode preferences by category (UPI→Food, Cash→Rent, Card→Travel/Entertainment, Transfer→Utilities) enabling smart suggestions.
-  ![User cluster distribution across four segments](images/Screenshot 2025-12-05 at 7.09.01 PM.png)
+  ![User cluster distribution across four segments](images/clusters_distribution.png)
 
 ### Week 5 – Dashboards & Business Insights
 - Built dashboards with KPI panels (15,658 transactions, 192 users, $195.4M volume), cluster profiles, temporal trends, and category-payment matrices for quick stakeholder consumption.
