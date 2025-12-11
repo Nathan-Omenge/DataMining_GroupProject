@@ -2,7 +2,7 @@
 
 ## Group Members: 
 - Zakariya Shafi (ID 596)
-- Catherine (ID ###) 
+- Catherine (ID 041) 
 - Aaron Irakoze (515)
 - Nathan Orang'o (637)
 - James Mponzi (ID ###)
