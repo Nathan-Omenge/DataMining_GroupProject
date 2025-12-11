@@ -1,7 +1,7 @@
 # Personal Finance Data Mining Project
 
 ## Group Members: 
-- Zaky Shafi (ID ###)
+- Zakariya Shafi (ID 596)
 - Catherine (ID ###) 
 - Aaron Irakoze (515)
 - Nathan Orang'o (637)
